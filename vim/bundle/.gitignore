@@ -1,0 +1,3 @@
+# Order matters! Ignore all, but then don't ignore this file.
+*
+!.gitignore
