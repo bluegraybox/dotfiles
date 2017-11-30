@@ -28,7 +28,7 @@ from collections import defaultdict
 
 class Task(object):
     def __init__(self):
-        self.descriptions = set()
+        self.subtasks = set()
         self.times = []
         self.total = 0
 
@@ -39,7 +39,8 @@ class Task(object):
 #line_re = re.compile(r"([A-Z]+)")
 #line_re = re.compile(r"(?: - )?")
 #line_re = re.compile(r"(.*)")
-line_re = re.compile(r"^    (\d+):(\d+)([ap]m)\?? +([A-Z]\w+-?[0-9]*)(?: - )?(.*)")
+#line_re = re.compile(r"^    (\d+):(\d+)([ap]m)\?? +([A-Z]\w+-?[0-9]*)(?: - )?(.*)")
+line_re = re.compile(r"^(?:\t|    )(\d+):(\d+)([ap]m)\?? +([A-Z]\w+-?[0-9]*)(?: - )?(.*)")
 lines = sys.stdin.readlines()
 tasks = defaultdict(Task)
 last_time = None
@@ -51,7 +52,7 @@ for line in lines:
         hours = int(m.group(1))
         minutes = int(m.group(2))
         am_pm = m.group(3)
-        if am_pm == 'pm':
+        if (am_pm == 'pm' and hours != 12) or (am_pm == 'am' and hours == 12):
             hours += 12
         t = (hours * 60) + minutes
         t = t % (24 * 60)
@@ -70,10 +71,10 @@ for line in lines:
             base_task = chunks[0] + "-TOTAL"
             tasks[base_task].times.append(time_text)
             tasks[base_task].total += delta
-        task = m.group(3)
-        desc = m.group(4)
+        task = m.group(4)
+        desc = m.group(5)
         if desc:
-            tasks[task].descriptions.add(desc)
+            tasks[task].subtasks.add(desc)
         last_task = task
         last_time = t % (24 * 60)
 
@@ -97,7 +98,7 @@ for base in sorted(base_count.iterkeys()):
 
 for task in sorted(tasks.iterkeys()):
     if task != 'OUT':
-        desc = ". ".join(tasks[task].descriptions)
+        desc = ". ".join(tasks[task].subtasks)
         t = tasks[task].total
         if task.find("-TOTAL") == -1:
             grand_total += t
@@ -107,10 +108,10 @@ for task in sorted(tasks.iterkeys()):
             total = ":%0.2d" % (t%60)
         if len(tasks[task].times) > 1 and task.find("-TOTAL") == -1:
             times = " ".join(tasks[task].times)
-            print "    %-16s%s (%s = %s)" % (task, desc, times, total)
+            print "\t%-16s%s (%s = %s)" % (task, desc, times, total)
         else:
-            print "    %-16s%s (%s)" % (task, desc, total)
+            print "\t%-16s%s (%s)" % (task, desc, total)
 
 print ''
-print "    TOTAL           %d:%0.2d" % (grand_total//60, grand_total%60)
+print "\tTOTAL           %d:%0.2d" % (grand_total//60, grand_total%60)
 
