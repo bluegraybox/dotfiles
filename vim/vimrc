@@ -40,14 +40,18 @@ set backspace=indent,eol,start
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
+set nojoinspaces
 au BufRead * loadview
 au BufWrite * mkview
 au BufUnload * mkview
 
+cabbrev h vert botright h
+cabbrev help vert botright help
+
 au BufRead,BufNewFile *.hbs set filetype=html
-au BufRead,BufNewFile *.txt so ~/Dropbox/config/.vim/txt.vim
-au BufRead,BufNewFile *.jrn so ~/Dropbox/config/.vim/txt.vim
-au BufRead,BufNewFile *.md,*.textile,*.markdown so ~/Dropbox/config/.vim/md.vim
+au BufRead,BufNewFile *.txt so ~/.vim/txt.vim
+au BufRead,BufNewFile *.jrn so ~/.vim/txt.vim
+au BufRead,BufNewFile *.md,*.textile,*.markdown so ~/.vim/md.vim
 
 " set statusline=%F%y%r%m%l,%c-%p
 set showcmd
@@ -61,7 +65,7 @@ nmap <F6> :r!date +"\%n\%n\%Y-\%m-\%d (\%A)\%n	\%-l:\%M\%P. "
 nmap <F7> :r!date +"	\%-l:\%M\%P. "
 " imap <F7> :r!date +"	\%-l:\%M\%P. "A
 nmap <F8> ?^\d\d\d\d-\d\d-\d\dma/^$kmb:'a,'b!~/dotfiles/summarize-time.py/^	TOTAL
-" imap <F8> ?^\d\d\d\d-\d\d-\d\dma/^$kmb:'a,'b!~/Dropbox/config/summarize-time.py/^	TOTAL
+" imap <F8> ?^\d\d\d\d-\d\d-\d\dma/^$kmb:'a,'b!~/dotfiles/summarize-time.py/^	TOTAL
 nmap <F9> :,!fmt
 " imap <F9> :,!fmtA
 
@@ -73,16 +77,22 @@ au BufRead,BufNewFile journal-personal.txt imap <F6> :r!date +"\%n\%n\%Y-\%m-\%
 call pathogen#infect()
 
 au BufRead,BufNewFile *.hbs,*.html set tabstop=2 softtabstop=2 shiftwidth=2
-au BufRead,BufNewFile *.go set noexpandtab
+" Disable Syntastic for Java
+let g:syntastic_ignore_files = ['\m\c\.java$']
 
 syntax enable
 " set background=dark
+set background=light
 " colorscheme solarized
 
 " au BufRead,BufNewFile journal-personal.txt highlight Normal cterm=bold ctermfg=1
+
+au BufRead,BufNewFile *.go,Makefile set noexpandtab
+au BufRead,BufNewFile *.clj set lisp tabstop=2 softtabstop=2 shiftwidth=2
+au BufRead,BufNewFile *.clj filetype plugin indent on
 
 highlight clear SpellBad
 highlight SpellBad cterm=underline
 highlight clear SpellLocal
 
-set nojoinspaces
+set tags=./tags,tags
