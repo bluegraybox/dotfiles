@@ -3,6 +3,4 @@ nmap j gj
 nmap k gk
 set lbr
 set noexpandtab
-set spell spelllang=en_us
 set spellcapcheck=
-
