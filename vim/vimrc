@@ -93,7 +93,10 @@ au BufRead,BufNewFile *.clj filetype plugin indent on
 
 set spell spelllang=en
 highlight clear SpellBad
-highlight SpellBad cterm=underline
 highlight clear SpellLocal
+" highlight SpellBad cterm=underline
+highlight SpellBad ctermfg=1
+highlight clear htmlItalic
+highlight htmlItalic ctermfg=4
 
 set tags=./tags,tags
