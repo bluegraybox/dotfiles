@@ -91,6 +91,7 @@ au BufRead,BufNewFile *.go,Makefile set noexpandtab
 au BufRead,BufNewFile *.clj set lisp tabstop=2 softtabstop=2 shiftwidth=2
 au BufRead,BufNewFile *.clj filetype plugin indent on
 
+set spell spelllang=en
 highlight clear SpellBad
 highlight SpellBad cterm=underline
 highlight clear SpellLocal
