@@ -195,3 +195,16 @@ function lw {
     # sleep 1
     lynx -cookies "https://en.wikipedia.org/w/index.php?search=$*&title=Special%3ASearch&fulltext=Search"
 }
+
+# Start Hugo server, capture URL, open in browser
+function hugosrv {
+    hugo serve -D | while read line ; do
+        url_prefix="Web Server is available at " 
+        echo "$line"
+        if [[ "${line:0:27}" == "$url_prefix" ]] ; then
+            url=${line#$url_prefix}
+            url=${url%% *}
+            open "$url"
+        fi
+    done
+}
