@@ -26,7 +26,15 @@ b='\[\033[00;34m\]'
 m='\[\033[00;35m\]'
 n='\[\033[00m\]'
 PS1="\D{%Y-%m-%d %H:%M:%S} $g\u$b@$m\h $b\w $g\$$n "
-# if [[ "${PS1/\\t/}" == "$PS1" ]] ; then export PS1="\t $PS1" ; fi
+# If this is an xterm make the tab title the working directory.
+case "$TERM" in
+xterm*|rxvt*)
+    # The \a is critical
+    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\w\a\]$PS1"
+    ;;
+*)
+    ;;
+esac
 
 export EDITOR=vim
 export PATH=$HOME/bin:$PATH
