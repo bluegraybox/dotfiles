@@ -56,6 +56,7 @@ alias ds='dropbox status'
 alias sr='svn diff -x -w > diff.txt && vi diff.txt commit.txt'
 
 alias gst='git status'
+alias grv='git remote -v'
 # alias gd='git diff --color'
 # alias gdc='git diff --color --cached'
 alias gb='git branch'
@@ -81,6 +82,7 @@ alias lsh='ls -lt | head'
 alias lss='less -Si'
 alias lsg='less -Si +G'
 alias db='psql -U postgres -W -h localhost checkbox'
+function whois { /usr/bin/whois $* | less ; }
 
 alias ..='cd ..'
 alias ..1='cd ..'
