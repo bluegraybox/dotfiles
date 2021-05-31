@@ -41,6 +41,8 @@ set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 set nojoinspaces
+set display=lastline
+set linebreak
 au BufRead * loadview
 au BufWrite * mkview
 au BufUnload * mkview
