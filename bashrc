@@ -41,9 +41,22 @@ export PATH=$HOME/bin:$PATH
 export GOPATH=$HOME/dev/go
 export PATH=$GOPATH/bin:$PATH
 
+# Use vi mode on the command line
 set -o vi
-shopt -s histappend cmdhist globstar
-HISTCONTROL=ignorespace
+# append to the history file, don't overwrite it
+shopt -s histappend
+# save each line of a multi-line command in the same history entry
+shopt -s cmdhist
+# If set, the pattern "**" used in a pathname expansion context will
+# match all files and zero or more directories and subdirectories.
+#shopt -s globstar
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+# don't put duplicate lines or lines starting with space in the history.
+# See bash(1) for more options
+HISTCONTROL=ignoreboth
 HISTFILESIZE=10000
 HISTSIZE=500
 HISTTIMEFORMAT="%Y-%m-%d %H:%M:%S    "
