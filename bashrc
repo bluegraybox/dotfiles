@@ -61,6 +61,9 @@ HISTFILESIZE=10000
 HISTSIZE=500
 HISTTIMEFORMAT="%Y-%m-%d %H:%M:%S    "
 
+# make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
 alias ta='tmux attach'
 alias ds='dropbox status'
 # alias gnon='sudo mtpfs -o allow_other /media/GalaxyNexus/'
@@ -107,6 +110,10 @@ alias ..6='cd ../../../../../..'
 alias ..7='cd ../../../../../../../..'
 alias ..8='cd ../../../../../../../../..'
 alias ..9='cd ../../../../../../../../../..'
+
+alias open='xdg-open'
+alias xcopy='xclip -selection clipboard -i'
+alias xpaste='xclip -selection clipboard -o'
 
 # find+grep
 function fing {
@@ -229,5 +236,15 @@ function hugosrv {
             url=${url%% *}
             open "$url"
         fi
+    done
+}
+
+function onmod {
+    if [ -z "$1" ] ; then echo "Usage: onmod 'command' files..." ; return ; fi
+    local cmd=$1
+    shift
+    while true ; do
+        inotifywait -e modify $*
+        $cmd
     done
 }
