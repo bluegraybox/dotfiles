@@ -38,7 +38,7 @@ esac
 
 export EDITOR=vim
 export PATH=$HOME/bin:$PATH
-export GOPATH=$HOME/dev/go
+export GOPATH=$HOME/go
 export PATH=$GOPATH/bin:$PATH
 
 # Use vi mode on the command line
