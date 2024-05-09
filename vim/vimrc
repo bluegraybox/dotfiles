@@ -8,6 +8,8 @@ map Q gq
 if &t_Co > 2 || has("gui_running")
   syntax on
   set hlsearch
+  " make highlighted text black, so it shows up against yellow background
+  highlight Search ctermfg=0
   " highlight Search ctermbg=7
   " highlight PreProc ctermfg=2 cterm=bold
   " make all the blues and reds bold, so you can actually read them.
