@@ -49,7 +49,7 @@ au BufRead * loadview
 au BufWrite * mkview
 au BufUnload * mkview
 
-cabbrev h vert botright h
+cabbrev h vert botright help
 cabbrev help vert botright help
 
 au BufRead,BufNewFile *.hbs set filetype=html
