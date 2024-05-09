@@ -77,8 +77,8 @@ au BufRead,BufNewFile *.jrn nmap <F6> :r!date +"\%n\%n\%Y-\%m-\%d \%-l:\%M:\%S \
 au BufRead,BufNewFile *.jrn nmap <F7> :r!date +"\%n\%-l:\%M \%p\%n	"A
 au BufRead,BufNewFile journal-personal.txt nmap <F6> :r!date +"\%n\%n\%Y-\%m-\%d \%-l:\%M:\%S \%p (\%A)\%n"
 au BufRead,BufNewFile journal-personal.txt imap <F6> :r!date +"\%n\%n\%Y-\%m-\%d \%-l:\%M:\%S \%p (\%A)\%n"A
-au BufRead,BufNewFile journal-*.tex nmap <F6> :r!date +"\%n\\subsection{\%A, \%B \%-d}\%n\\textbf{\%-l:\%M\%P}\%n"
-au BufRead,BufNewFile journal-*.tex nmap <F7> :r!date +"\%n\\textbf{\%-l:\%M\%P}\%n"
+au BufRead,BufNewFile journal-*.tex nmap <F6> :r!date +"\%n\\subsection{\%A, \%B \\nth{\%-d}}\%n\\textbf{\%-l:\%M\%P}\%n"zz
+au BufRead,BufNewFile journal-*.tex nmap <F7> :r!date +"\%n\\textbf{\%-l:\%M\%P}\%n"zz
 
 call pathogen#infect()
 
