@@ -2,5 +2,5 @@
 nmap j gj
 nmap k gk
 set lbr
-set noexpandtab
+" set noexpandtab  " Zettlr doesn't handle tabs well - expand them
 set spellcapcheck=
