@@ -49,7 +49,7 @@ shopt -s histappend
 shopt -s cmdhist
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
-#shopt -s globstar
+shopt -s globstar
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
@@ -82,7 +82,7 @@ alias gup='git pull --rebase'
 function gd { git diff -b --color $* | less -R; }
 function gdc { git diff -b --cached --color $* | less -R; }
 function gl { git log --name-status --color $* | less -R; }
-alias gr='git diff --cached -w > .diff && vi .diff .commit'
+function gr { local d=$(git rev-parse --show-toplevel) && git diff --cached -w > ${d}/.diff && vi ${d}/.diff ${d}/.commit ; }
 function gg { git log --graph --format=format:"%h %d %s [%cn]" --color --full-history --sparse $* | less -RSi; }
 alias gga='git log --graph --format=format:"%h %d %s [%cn]" --all --color --full-history --sparse | lss -R'
 
@@ -111,7 +111,7 @@ alias ..7='cd ../../../../../../../..'
 alias ..8='cd ../../../../../../../../..'
 alias ..9='cd ../../../../../../../../../..'
 
-alias open='xdg-open'
+function open { for x in "$@" ; do xdg-open "$x" ; done ; }
 alias xcopy='xclip -selection clipboard -i'
 alias xpaste='xclip -selection clipboard -o'
 
@@ -228,7 +228,7 @@ function lw {
 
 # Start Hugo server, capture URL, open in browser
 function hugosrv {
-    hugo serve -D | while read line ; do
+    hugo serve -D --disableFastRender | while read line ; do
         url_prefix="Web Server is available at " 
         echo "$line"
         if [[ "${line:0:27}" == "$url_prefix" ]] ; then
