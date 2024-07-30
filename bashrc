@@ -79,11 +79,11 @@ alias gb='git branch'
 alias gco='git checkout'
 alias gsl='git stash list'
 alias gup='git pull --rebase'
-function gd { git diff -b --color $* | less -R; }
-function gdc { git diff -b --cached --color $* | less -R; }
-function gl { git log --name-status --color $* | less -R; }
+function gd { git diff -b --color "$@" | less -R; }
+function gdc { git diff -b --cached --color "$@" | less -R; }
+function gl { git log --name-status --color "$@" | less -R; }
 function gr { local d=$(git rev-parse --show-toplevel) && git diff --cached -w > ${d}/.diff && vi ${d}/.diff ${d}/.commit ; }
-function gg { git log --graph --format=format:"%h %d %s [%cn]" --color --full-history --sparse $* | less -RSi; }
+function gg { git log --graph --format=format:"%h %d %s [%cn]" --color --full-history --sparse "$@" | less -RSi; }
 alias gga='git log --graph --format=format:"%h %d %s [%cn]" --all --color --full-history --sparse | lss -R'
 
 function gsp { if [[ -z "$1" ]] ; then echo "gsp <stash id>"; else git stash pop stash@{$1} ; fi ; }
@@ -98,7 +98,7 @@ alias lsh='ls -lt | head'
 alias lss='less -Si'
 alias lsg='less -Si +G'
 alias db='psql -U postgres -W -h localhost checkbox'
-function whois { /usr/bin/whois $* | less ; }
+function whois { /usr/bin/whois "$@" | less ; }
 
 alias ..='cd ..'
 alias ..1='cd ..'
@@ -157,7 +157,8 @@ function txt2pdf {
             OPTS="-2 -r $OPTS"
         fi
         FONT="NewCenturySchlbk-Roman$font_sz"
-        enscript $OPTS -o $basefile.ps -f $FONT -F $FONT $txtfile && ps2pdf $basefile.ps && rm $basefile.ps
+        # enscript can't handle UTF-8; convert to ISO-8859-1 first
+        iconv -c -f utf-8 -t ISO-8859-1//TRANSLIT $txtfile | enscript $OPTS -o $basefile.ps -f $FONT -F $FONT && ps2pdf $basefile.ps && rm $basefile.ps
         shift
     done
 }
@@ -244,7 +245,7 @@ function onmod {
     local cmd=$1
     shift
     while true ; do
-        inotifywait -e modify $*
+        inotifywait -e modify "$@"
         $cmd
     done
 }
