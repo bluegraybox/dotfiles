@@ -134,10 +134,10 @@ function fing {
             dirs="${@:1:$#-2}"
             find $dirs -name "$name" -type f $find_opts | xargs -0 grep $grepOpts "$exp" 
         else
-            find -name "$name" -type f $find_opts | xargs -0 grep $grepOpts "$exp" 
+            find . -name "$name" -type f $find_opts | xargs -0 grep $grepOpts "$exp" 
         fi
     else
-        find -type f $find_opts | xargs -0 grep $grepOpts "$exp" 
+        find . -type f $find_opts | xargs -0 grep $grepOpts "$exp" 
     fi
 }
 
