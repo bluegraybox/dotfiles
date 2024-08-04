@@ -119,6 +119,17 @@ function open { for x in "$@" ; do xdg-open "$x" ; done ; }
 alias xcopy='xclip -selection clipboard -i'
 alias xpaste='xclip -selection clipboard -o'
 
+# delete files older than 365 days from Vim's view cache
+function vimtidy {
+    local d=$HOME/.vim_view/
+    echo "tidying $d" &&
+        echo -n "before:    " &&
+        du -sh $d &&
+        find $d -mtime +365 -depth 1 -delete &&
+        echo -n "after:     " &&
+        du -sh $d
+}
+
 # find+grep
 function fing {
     local grepOpts=""
