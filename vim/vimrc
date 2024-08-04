@@ -50,15 +50,21 @@ au BufWrite * mkview
 au BufUnload * mkview
 
 cabbrev h vert botright help
-cabbrev help vert botright help
+" cabbrev help vert botright help
 
-au BufRead,BufNewFile *.hbs set filetype=html
-au BufRead,BufNewFile *.txt,*.tex so ~/.vim/txt.vim
-au BufRead,BufNewFile *.jrn so ~/.vim/txt.vim
-au BufRead,BufNewFile *.md,*.textile,*.markdown so ~/.vim/md.vim
+" word-wrap text files, but not code
+au BufRead,BufNewFile *.txt,*.tex,*.md,*.textile,*.markdown set lbr
+" use tab chars in text and TeX files, but not markdown
+au BufRead,BufNewFile *.txt,*.tex set noexpandtab
+" TeX class files
+au BufRead,BufNewFile *.cls set syntax=tex
 
 " set statusline=%F%y%r%m%l,%c-%p
 set showcmd
+
+" move by visual line, not logical line
+nmap j gj
+nmap k gk
 
 nmap <F1> 
 imap <F1> 
@@ -73,8 +79,6 @@ nmap <F8> ?^\d\d\d\d-\d\d-\d\dma/^$kmb:'a,'b!~/dotfiles/summarize-time.py/^	T
 nmap <F9> :,!fmt
 " imap <F9> :,!fmtA
 
-au BufRead,BufNewFile *.jrn nmap <F6> :r!date +"\%n\%n\%Y-\%m-\%d \%-l:\%M:\%S \%p (\%A)\%n	"A
-au BufRead,BufNewFile *.jrn nmap <F7> :r!date +"\%n\%-l:\%M \%p\%n	"A
 au BufRead,BufNewFile journal-personal.txt nmap <F6> :r!date +"\%n\%n\%Y-\%m-\%d \%-l:\%M:\%S \%p (\%A)\%n"
 au BufRead,BufNewFile journal-personal.txt imap <F6> :r!date +"\%n\%n\%Y-\%m-\%d \%-l:\%M:\%S \%p (\%A)\%n"A
 au BufRead,BufNewFile journal-*.tex nmap <F6> :r!date +"\%n\\subsection{\%A, \%B \\nth{\%-d}}\%n\\textbf{\%-l:\%M\%P}\%n"zz
@@ -82,8 +86,7 @@ au BufRead,BufNewFile journal-*.tex nmap <F7> :r!date +"\%n\\textbf{\%-l:\%M\%P}
 
 call pathogen#infect()
 
-au BufRead,BufNewFile *.hbs,*.html set tabstop=2 softtabstop=2 shiftwidth=2
-au BufRead,BufNewFile *.go set noexpandtab
+au BufRead,BufNewFile *.html set tabstop=2 softtabstop=2 shiftwidth=2
 " Disable Syntastic for Java
 let g:syntastic_ignore_files = ['\m\c\.java$']
 
@@ -98,7 +101,8 @@ au BufRead,BufNewFile *.go,Makefile set noexpandtab
 au BufRead,BufNewFile *.clj set lisp tabstop=2 softtabstop=2 shiftwidth=2
 au BufRead,BufNewFile *.clj filetype plugin indent on
 
-set spell spelllang=en
+set spell spelllang=en_us
+" au BufRead,BufNewFile *.txt,*.tex,*.md,*.textile,*.markdown set spellcapcheck=  " don't check capitalization of first word in sentence
 highlight clear SpellBad
 highlight clear SpellLocal
 highlight link SpellLocal SpellBad
