@@ -106,10 +106,12 @@ highlight clear SpellBad
 highlight clear SpellLocal
 highlight link SpellLocal SpellBad
 " highlight SpellBad cterm=underline
-highlight SpellBad ctermfg=1
+highlight SpellBad ctermfg=1 guifg=Red
 highlight clear htmlItalic
 highlight htmlItalic ctermfg=4
 
 set tags=./tags,tags
 
 set nojoinspaces
+" hide the toolbar in GVim
+set guioptions-=T
